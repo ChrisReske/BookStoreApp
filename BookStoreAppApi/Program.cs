@@ -11,9 +11,22 @@ builder.Services.AddSwaggerGen();
 
 #region SeriLog Configuration
 
-builder.Host.UseSerilog((ctx, lc) => 
+builder.Host.UseSerilog((ctx, lc) =>
     lc.WriteTo.Console()
         .ReadFrom.Configuration(ctx.Configuration));
+
+#endregion
+
+#region CORS
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        b => b
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowAnyOrigin());
+});
 
 #endregion
 
@@ -27,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
