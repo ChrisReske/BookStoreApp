@@ -1,3 +1,4 @@
+using BookStoreAppApi.Configurations;
 using BookStoreAppApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -38,6 +39,12 @@ var connString = builder.Configuration.GetConnectionString("BookStoreAppDbConnec
 builder.Services
     .AddDbContext<BookStoreDbContext>(options => options
         .UseSqlServer(connString));
+
+#endregion
+
+#region AutoMapper
+
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 #endregion
 
