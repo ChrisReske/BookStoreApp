@@ -1,3 +1,4 @@
+using BookStoreAppApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -34,9 +35,9 @@ builder.Services.AddCors(options =>
 #region Database connection
 
 var connString = builder.Configuration.GetConnectionString("BookStoreAppDbConnection");
-//builder.Services
-//    .AddDbContext<BookStoreDbContext>(options => options
-//        .UseSqlServer(connString));
+builder.Services
+    .AddDbContext<BookStoreDbContext>(options => options
+        .UseSqlServer(connString));
 
 #endregion
 
