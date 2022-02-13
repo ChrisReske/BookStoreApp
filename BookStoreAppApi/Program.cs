@@ -52,7 +52,7 @@ builder.Services.AddAutoMapper(typeof(MapperConfig));
 #region NETCore Identity
 
 builder.Services
-    .AddIdentityCore<IdentityUser>()
+    .AddIdentityCore<ApiUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<BookStoreDbContext>();
 
