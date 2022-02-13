@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Configurations\" />
+    <Folder Include="Models\Book\" />
   </ItemGroup>
 
 </Project>
