@@ -1,5 +1,6 @@
 using BookStoreAppApi.Configurations;
 using BookStoreAppApi.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -45,6 +46,15 @@ builder.Services
 #region AutoMapper
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+#endregion
+
+#region NETCore Identity
+
+builder.Services
+    .AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<BookStoreDbContext>();
 
 #endregion
 
