@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Configurations\" />
     <Folder Include="Models\Book\" />
+    <Folder Include="Models\User\" />
   </ItemGroup>
 
 </Project>
