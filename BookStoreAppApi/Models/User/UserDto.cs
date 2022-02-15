@@ -2,7 +2,7 @@
 
 namespace BookStoreAppApi.Models.User
 {
-    public class UserDto
+    public class UserDto : LoginUserDto
     {
         [Required]
         [EmailAddress]
@@ -16,6 +16,8 @@ namespace BookStoreAppApi.Models.User
         
         [Required]
         public string LastName { get; set; }
-        
+
+        [Required]
+        public string Role { get; set; }
     }
 }
