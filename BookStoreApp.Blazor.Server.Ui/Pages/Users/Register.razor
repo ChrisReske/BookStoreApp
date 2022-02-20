@@ -1,0 +1,70 @@
+﻿@page "/users/register"
+@inject IClient httpClient
+@inject NavigationManager navigationManager
+
+<h3>Register New Account</h3>
+@if (string.IsNullOrEmpty(_message) == false)
+{
+    <div class="alert alert-danger">
+        <p>@_message</p>
+    </div>
+}
+<div class="card-body">
+    <EditForm Model="_registrationModel" OnInvalidSubmit="HandleRegistration">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <InputText class="form-control" @bind-Value="_registrationModel.Email"></InputText>
+            <ValidationMessage For="@(() => _registrationModel.Email)"/>
+        </div>
+        <div class="form-group">
+            <label for="email">First Name</label>
+            <InputText class="form-control" @bind-Value="_registrationModel.FirstName"></InputText>
+            <ValidationMessage For="@(() => _registrationModel.FirstName)"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Last Name</label>
+            <InputText class="form-control" @bind-Value="_registrationModel.LastName"></InputText>
+            <ValidationMessage For="@(() => _registrationModel.LastName)"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Password</label>
+            <InputText class="form-control" typeof="password" @bind-Value="_registrationModel.Password"></InputText>
+            <ValidationMessage For="@(() => _registrationModel.Password)"/>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </EditForm>
+</div>    
+
+@code {
+
+    readonly UserDto _registrationModel = new UserDto()
+    {
+        Role = "User"
+    };
+    string _message = string.Empty;
+
+    private async Task HandleRegistration()
+    {
+        _registrationModel.Role = "User";
+        try
+        {
+            await httpClient.RegisterAsync(_registrationModel);
+            NavigateToLogin();
+        }
+        catch (ApiException e)
+        {
+            if(e.StatusCode is >= 200 and <= 299)
+            {
+                NavigateToLogin();
+            }
+            _message = e.Message;
+        }
+    }
+
+    private void NavigateToLogin()
+    {
+        navigationManager.NavigateTo("/users/login");
+    }
+}
