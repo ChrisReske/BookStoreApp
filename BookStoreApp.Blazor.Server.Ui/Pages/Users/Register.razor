@@ -1,6 +1,6 @@
 ﻿@page "/users/register"
-@inject IClient httpClient
-@inject NavigationManager navigationManager
+@inject IClient _httpClient
+@inject NavigationManager _navigationManager
 
 <h3>Register New Account</h3>
 @if (string.IsNullOrEmpty(_message) == false)
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <label for="email">Password</label>
-            <InputText class="form-control" typeof="password" @bind-Value="_registrationModel.Password"></InputText>
+            <InputText class="form-control" type="password" @bind-Value="_registrationModel.Password"></InputText>
             <ValidationMessage For="@(() => _registrationModel.Password)"/>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -39,7 +39,7 @@
 
 @code {
 
-    readonly UserDto _registrationModel = new UserDto()
+    readonly UserDto _registrationModel = new()
     {
         Role = "User"
     };
@@ -47,10 +47,9 @@
 
     private async Task HandleRegistration()
     {
-        _registrationModel.Role = "User";
         try
         {
-            await httpClient.RegisterAsync(_registrationModel);
+            await _httpClient.RegisterAsync(_registrationModel);
             NavigateToLogin();
         }
         catch (ApiException e)
@@ -65,6 +64,6 @@
 
     private void NavigateToLogin()
     {
-        navigationManager.NavigateTo("/users/login");
+        _navigationManager.NavigateTo("/users/login");
     }
 }
