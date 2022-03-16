@@ -1,0 +1,48 @@
+﻿@page "/users/login"
+@inject IAuthenticationService _authenticationService
+
+<h3>Login</h3>
+
+<div>
+    <EditForm Model="_loginModel" OnInvalidSubmit="HandleLogin">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <ValidationSummary></ValidationSummary>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <InputText class="form-control" @bind-Value="_loginModel.Email"></InputText>
+            <ValidationMessage For="@(() => _loginModel.Email)"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Password</label>
+            <InputText class="form-control" type="password" @bind-Value="_loginModel.Password"></InputText>
+            <ValidationMessage For="@(() => _loginModel.Password)"/>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </EditForm>
+
+
+</div>
+
+@code {
+    readonly LoginUserDto _loginModel = new LoginUserDto();
+    string _message = string.Empty;
+
+
+    public async Task HandleLogin()
+    {
+        try
+        {
+           var response = await _authenticationService.AuthenticateAsync(_loginModel);
+       
+        }
+        catch (ApiException e)
+        {
+            if(e.StatusCode is >= 200 and <= 299)
+            {
+                
+            }
+            _message = e.Message;
+        }
+
+    }
+}
