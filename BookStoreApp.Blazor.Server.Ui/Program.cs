@@ -9,11 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-SetupAndConfigureBlazored(builder);
+ConfigureAndRegisterBlazored(builder);
 
-//Register and configure HttpClient
-builder.Services.AddHttpClient<IClient, Client>(cl => cl
-    .BaseAddress = new Uri("https://localhost:7144"));
+ConfigureAndRegisterHttpClient(builder);
 
 //AuthenticationService
 
@@ -47,7 +45,13 @@ app.MapFallbackToPage("/_Host");
 
 app.Run();
 
-void SetupAndConfigureBlazored(WebApplicationBuilder webApplicationBuilder)
+void ConfigureAndRegisterBlazored(WebApplicationBuilder webApplicationBuilder)
 {
     webApplicationBuilder.Services.AddBlazoredLocalStorage();
+}
+
+void ConfigureAndRegisterHttpClient(WebApplicationBuilder builder1)
+{
+    builder1.Services.AddHttpClient<IClient, Client>(cl => cl
+        .BaseAddress = new Uri("https://localhost:7144"));
 }
