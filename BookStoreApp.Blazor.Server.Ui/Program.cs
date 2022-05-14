@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-//Blazored
-builder.Services.AddBlazoredLocalStorage();
+SetupAndConfigureBlazored(builder);
 
 //Register and configure HttpClient
 builder.Services.AddHttpClient<IClient, Client>(cl => cl
@@ -48,3 +46,8 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+void SetupAndConfigureBlazored(WebApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.Services.AddBlazoredLocalStorage();
+}
