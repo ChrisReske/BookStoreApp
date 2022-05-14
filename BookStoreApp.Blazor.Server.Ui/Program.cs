@@ -13,14 +13,7 @@ ConfigureAndRegisterBlazored(builder);
 
 ConfigureAndRegisterHttpClient(builder);
 
-//AuthenticationService
-
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddScoped<ApiAuthenticationStateProvider>();
-
-// Setup and configure AuthenticationStateProvider
-builder.Services.AddScoped<AuthenticationStateProvider>(p => 
-    p.GetRequiredService<ApiAuthenticationStateProvider>());
+ConfigureAndRegisterAuthenticationService(builder);
 
 var app = builder.Build();
 
@@ -50,8 +43,23 @@ void ConfigureAndRegisterBlazored(WebApplicationBuilder webApplicationBuilder)
     webApplicationBuilder.Services.AddBlazoredLocalStorage();
 }
 
-void ConfigureAndRegisterHttpClient(WebApplicationBuilder builder1)
+void ConfigureAndRegisterHttpClient(WebApplicationBuilder webApplicationBuilder)
 {
-    builder1.Services.AddHttpClient<IClient, Client>(cl => cl
-        .BaseAddress = new Uri("https://localhost:7144"));
+    const string httpsLocalhost = "https://localhost:7144";
+    webApplicationBuilder.Services.AddHttpClient<IClient, Client>(cl =>
+    {
+        
+        cl
+            .BaseAddress = new Uri(httpsLocalhost);
+    });
+}
+
+void ConfigureAndRegisterAuthenticationService(WebApplicationBuilder webApplicationBuilder)
+{
+    webApplicationBuilder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+    webApplicationBuilder.Services.AddScoped<ApiAuthenticationStateProvider>();
+
+    // Setup and configure AuthenticationStateProvider
+    webApplicationBuilder.Services.AddScoped<AuthenticationStateProvider>(p =>
+        p.GetRequiredService<ApiAuthenticationStateProvider>());
 }
