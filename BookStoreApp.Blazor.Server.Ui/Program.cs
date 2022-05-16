@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using Blazored.LocalStorage;
 using BookStoreApp.Blazor.Server.Ui.Providers;
 using BookStoreApp.Blazor.Server.Ui.Services.Authentication;
@@ -14,6 +15,9 @@ ConfigureAndRegisterBlazored(builder);
 ConfigureAndRegisterHttpClient(builder);
 
 ConfigureAndRegisterAuthenticationService(builder);
+
+// Setup and configure jwt service
+builder.Services.AddScoped<JwtSecurityTokenHandler>();
 
 var app = builder.Build();
 

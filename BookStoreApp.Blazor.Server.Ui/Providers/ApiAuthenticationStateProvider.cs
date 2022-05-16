@@ -16,7 +16,7 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
     {
         _localStorageService = localStorageService
                                ?? throw new ArgumentNullException(nameof(localStorageService));
-        _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
+          _jwtSecurityTokenHandler = jwtSecurityTokenHandler;
 
     }
 
